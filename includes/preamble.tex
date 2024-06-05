@@ -1,0 +1,91 @@
+% Math
+\usepackage{amsmath}
+\usepackage{upgreek}
+
+% Miscelaneous
+\usepackage{pgfpages}
+\usepackage{csquotes}
+\usepackage{placeins}
+
+% Captions
+\usepackage[labelformat=empty]{caption}
+
+% Colors
+\usepackage{xcolor}
+
+% Requirements
+\RequirePackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows,shapes,positioning}
+
+% For \smiley{} and \frowney{}
+\usepackage{wasysym}
+
+% Pseudocode
+\usepackage[vlined, linesnumbered, ruled]{algorithm2e}
+\SetKwComment{Comment}{/* }{*/}
+\SetKwInput{KwData}{Input}
+\SetKwInput{KwResult}{Output}
+\IncMargin{1.5em}
+
+% nice icons
+%\usepackage{fontawesome}
+
+% IMPORTANT NOTE: outputdir needs to be equal to output/aux dir of xelatex
+%\usepackage[outputdir=output]{minted}
+\usepackage{appendixnumberbeamer}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{colortbl}
+
+% Date formatting
+\usepackage[short,nodayofweek]{datetime}
+
+% Für Vektoren
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\def\spvec#1{\left(\vcenter{\halign{\hfil$##$\hfil\cr \spvecA#1;;}}\right)}
+\def\spvecA#1;{\if;#1;\else #1\cr \expandafter \spvecA \fi}
+
+% Hyperlinks
+\definecolor{citeblue}{rgb}{0,0.3,0.55}
+\RequirePackage{hyperref}
+\hypersetup{colorlinks,linkcolor={lightgray},citecolor={citeblue},urlcolor={citeblue}}
+\let\oldciteauthor=\citeauthor
+\def\citeauthor#1{\hypersetup{citecolor=white}\oldciteauthor{#1}}
+
+% Added
+\usepackage{circuitikz}
+\usepackage{grfext}
+
+% Reelle, Natürliche, Ganze, Rationale Zahlen
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+
+\usetikzlibrary{decorations.pathreplacing,calc}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+
+\newcommand*{\AddNote}[5]{%
+	\begin{tikzpicture}[overlay, remember picture]
+		\draw [decoration={brace,amplitude=0.5em},decorate,ultra thick,color=#4]
+		($(#3)!(#2.south)!($(#3)-(0,1)$)$) --
+		($(#3)!(#1.north)!($(#3)-(0,1)$)$)
+		node [align=center, text width=0.5cm, pos=0.5, anchor=east] {#5};
+	\end{tikzpicture}
+}%
+
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+%\usepackage{algorithm}% http://ctan.org/pkg/algorithm
+
+% captions for subfigures.
+\usepackage{subcaption}
+
+
+% Clever references.
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{amssymb}

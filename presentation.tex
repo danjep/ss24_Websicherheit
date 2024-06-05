@@ -1,0 +1,65 @@
+% HINT: add option aspectratio=169 for 16:9 aspect ratio
+% HINT: add 'handout' to activate handout mode (without overlays for printing)
+\documentclass[t,german,aspectratio=169]{beamer}
+
+% include package import and macro defintions
+\input{includes/preamble}
+\input{includes/commenting}
+
+% add (multiple) bibliography sources for biblatex
+
+
+
+% NOTE: the predefined options are best practices of AIM!
+%       Do not change for seminar talks!
+% Set authorinfo={0,1} to (de)activate short author and short title in footer
+% Set progress={0,1} to switch between x and x/total display of pages in the bottom right corner
+% Set outline={0,1} to (de)activate outline slides at the beginning of each section
+\usetheme[authorinfo=1, progress=0, outline=0]{AIM}
+
+% metadata
+\title{HTTP Parameter Pollution}
+\author{Julian Liborius \and Simon Wöhltjen \and Danje Petersen}
+\institute{TU Braunschweig, Germany}
+\date{\small\today}
+
+
+
+%%% NOTE: do not remove the following marker. We use it for automatic compilation of multiple versions
+%%% of the slides (e.g., handout, presentation with overlays) via compile.py
+%%%pythonmarker
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\addtocounter{framenumber}{-1}
+
+\begin{frame}{HTTP Parameter}
+\twocol{
+\begin{itemize}
+	\item Senden Informationen vom Klienten zum Server
+	\item Können an verschiedenen Orten versendet werden
+	\begin{itemize}
+		\item in der URI (GET request)
+		\item im request body (POST request)
+		\item in HTTP headern
+	\end{itemize}
+\end{itemize}}
+{ \small\texttt{www.example.org\color{red!70!black}{?name=Hans\&alter=44}}
+}
+\end{frame}
+
+\begin{frame}{Parameter Precedence}
+\begin{itemize}
+	\item Problem entsteht, wenn für einen Parameter genau ein Wert erwartet wird, aber mehrere erhalten werden
+	\item Je nach Programmiersprache und Server wird unterschiedlich vorgegangen
+	\item[] \includegraphics[scale=0.4]{includes/table1.jpg}
+	\item So können falsche Parameter in die URI hinzugefügt werden, die die Richtigen überschreiben
+\end{itemize}
+\end{frame}
+
+
+\end{document}
