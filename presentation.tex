@@ -37,27 +37,54 @@
 
 \addtocounter{framenumber}{-1}
 
+\begin{frame}{HTTP Parameter Pollution}
+\begin{itemize}
+	\item Exploit wurde 2009 öffentlich gemacht
+	\item Client-side 
+	\item \todo{basic facts über den exploit}
+\end{itemize}
+\end{frame}
+
 \begin{frame}{HTTP Parameter}
-\twocol{
 \begin{itemize}
 	\item Senden Informationen vom Klienten zum Server
 	\item Können an verschiedenen Orten versendet werden
 	\begin{itemize}
-		\item in der URI (GET request)
+		\item im Query-Teil der URI (GET request) \\ $\qquad \rightarrow$ \small\texttt{www.example.org\color{red!70!black}{?name=Manfred\&age=44}}
 		\item im request body (POST request)
 		\item in HTTP headern
 	\end{itemize}
-\end{itemize}}
-{ \small\texttt{www.example.org\color{red!70!black}{?name=Hans\&alter=44}}
-}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Parameter Precedence}
 \begin{itemize}
 	\item Problem entsteht, wenn für einen Parameter genau ein Wert erwartet wird, aber mehrere erhalten werden
 	\item Je nach Programmiersprache und Server wird unterschiedlich vorgegangen
-	\item[] \includegraphics[scale=0.4]{includes/table1.jpg}
+	\item[] \begin{center}\includegraphics[scale=0.4]{includes/table1.jpg}\end{center}
 	\item So können falsche Parameter in die URI hinzugefügt werden, die die Richtigen überschreiben
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Parameter Pollution}
+\begin{itemize}
+	\item Neben dem zu manipulierenden Parameter kann es auch einen Parameter geben der polluted wird.
+	\item Dafür wird in diesen der manipulierte Parameter in verschlüsselter Form eingefügt 
+	\item Reservierte Zeichen in den value-strings müssen in Hexadezimalform kodiert sein 
+	\item z.B.: \texttt{\%26} für \glqq \&\grqq{}, \texttt{\%3D} für \glqq =\grqq
+	\item So lässt sich ein \textit{name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
+	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert und es entstehen Duplikate
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Parameter Precedence Beispiel}
+\begin{itemize}
+	\item Angenommen, es wird immer der erste Parameterwert genutzt
+	\item[] \begin{center} \texttt{example.org?name=Manfred\&{}age=44}\end{center}
+	\item Der erste Parameter wird \glqq polluted\grqq{}
+	\item[] \begin{center} \texttt{example.org?name=Manfred\%26age\%3D20} \end{center}
+	\item Wenn nun das richtige Alter eingegeben wird, werden folgende Parameter verschickt:
+	\item[]\begin{center} \texttt{example.org?name=Manfred\&{}age=20\&{}age=44} \end{center}
 \end{itemize}
 \end{frame}
 
