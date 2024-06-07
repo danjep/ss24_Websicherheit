@@ -40,7 +40,7 @@
 \begin{frame}{HTTP Parameter Pollution}
 \begin{itemize}
 	\item Exploit wurde 2009 öffentlich gemacht
-	\item Client-side 
+	\item Client-side und Server-side möglich
 	\item \todo{basic facts über den exploit}
 \end{itemize}
 \end{frame}
@@ -85,8 +85,29 @@
 	\item[] \begin{center} \texttt{example.org?name=Manfred\%26age\%3D20} \end{center}
 	\item Wenn nun das richtige Alter eingegeben wird, werden folgende Parameter verschickt:
 	\item[]\begin{center} \texttt{example.org?name=Manfred\&{}age=20\&{}age=44} \end{center}
+	\item \texttt{age=44} würde ignoriert werden.
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Andere Formen}
+\begin{itemize}
+	\item Neue Parameter hinzufügen \todo{was ist damit möglich?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mögliche Anwendungen}
+\begin{itemize}
+	\item Beeinflussung von Online-Abstimmungen
+	\item Phishing?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Gegenmaßnahmen}
+\begin{itemize}
+	\item Input sanitation
+	\item Nur bekannte Parameter akzeptieren
+	\item Security Header benutzen \todo{mehr recherche}
+\end{itemize}
+\end{frame}
 
 \end{document}
