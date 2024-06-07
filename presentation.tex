@@ -9,9 +9,6 @@
 % add (multiple) bibliography sources for biblatex
 
 
-
-% NOTE: the predefined options are best practices of AIM!
-%       Do not change for seminar talks!
 % Set authorinfo={0,1} to (de)activate short author and short title in footer
 % Set progress={0,1} to switch between x and x/total display of pages in the bottom right corner
 % Set outline={0,1} to (de)activate outline slides at the beginning of each section
@@ -37,10 +34,14 @@
 
 \addtocounter{framenumber}{-1}
 
-\begin{frame}{HTTP Parameter Pollution}
+\begin{frame}{HTTP Parameter Pollution (HPP)}
 \begin{itemize}
 	\item Exploit wurde 2009 öffentlich gemacht
 	\item Client-side und Server-side möglich
+	\begin{itemize}
+		\item Client-side: Verbreitung manipulierter Links
+		\item Server-side: Übergabe manipulierter Parameter an das backend
+	\end{itemize}
 	\item \todo{basic facts über den exploit}
 \end{itemize}
 \end{frame}
@@ -52,7 +53,7 @@
 	\begin{itemize}
 		\item im Query-Teil der URI (GET request) \\ $\qquad \rightarrow$ \small\texttt{www.example.org\color{red!70!black}{?name=Manfred\&age=44}}
 		\item im request body (POST request)
-		\item in HTTP headern
+		\item in HTTP headern \todo{header injection}
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -92,6 +93,7 @@
 \begin{frame}{Andere Formen}
 \begin{itemize}
 	\item Neue Parameter hinzufügen \todo{was ist damit möglich?}
+	\item Parameter löschen durch Einfügen eines \texttt{\#}-Symbols
 \end{itemize}
 \end{frame}
 
@@ -99,6 +101,38 @@
 \begin{itemize}
 	\item Beeinflussung von Online-Abstimmungen
 	\item Phishing?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Häufigkeit}
+\begin{itemize}
+	\item Paper von Balduzzi et al. (2011) untersucht ca. 5000 Websites
+	\begin{itemize}
+		\item PAPAS tool (PArameter Pollution Analysis System)
+		\item Sucht nach Client-side vulnerabilities
+	\end{itemize}
+	\item $30\%$ hatten HPP vulnerabilities
+	\begin{itemize}
+		\item bei $14\%$ änderte dies potentiell das Verhalten der Seite
+	\end{itemize}
+	\item Auch bekannte Websites (Google, Microsoft) darunter
+	\item Aktuellere Untersuchungen nicht bekannt
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Gefundene Beispiele}
+\begin{itemize}
+\item Integrierter share-Button von sozialen Netzwerken
+	\begin{itemize}
+		\item z.B. auf Nachrichtenseiten
+		\item[] \centering \includegraphics[scale=0.35]{includes/sharegrafik.png}
+	\end{itemize}
+\item \glqq Einkaufskorb\grqq{} auf Shopping-Seiten
+	\begin{itemize}
+		\item Items konnten hinzugefügt oder geändert werden
+	\end{itemize}
+	\item Banking-Webseiten
+	\item Filtereinstellungen auf verschiedenen Webseiten
 \end{itemize}
 \end{frame}
 
