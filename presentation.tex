@@ -15,7 +15,7 @@
 \usetheme[authorinfo=1, progress=0, outline=0]{AIM}
 
 % metadata
-\title{HTTP Parameter Pollution}
+\title{HTTP Parameter Pollution (HPP)}
 \author{Julian Liborius \and Simon Wöhltjen \and Danje Petersen}
 \institute{TU Braunschweig, Germany}
 \date{\small\today}
@@ -34,9 +34,10 @@
 
 \addtocounter{framenumber}{-1}
 
-\begin{frame}{HTTP Parameter Pollution (HPP)}
+\begin{frame}{Einführung - Was ist HPP?)}
 \begin{itemize}
 	\item Exploit wurde 2009 öffentlich gemacht
+	\item Nutzt HTTP Parameter als Injection-Schwachstelle
 	\item Client-side und Server-side möglich
 	\begin{itemize}
 		\item Client-side: Verbreitung manipulierter Links
@@ -103,10 +104,33 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Mögliche Anwendungen}
+\begin{frame}{Beispiel-Szenario}
 \begin{itemize}
-	\item Beeinflussung von Online-Abstimmungen
-	\item Phishing?
+	\item Beeinflussung einer Online-Abstimmungen
+	\item Wahl von zwei Kandidaten über Links
+	\begin{itemize}
+		\item Url: \texttt{http://host/election.jsp?poll\_id=4568}
+		\item Link 1: \texttt{<a href="vote.jsp?poll\_id=4568\&candidate=white">Vote for Mr. White</a>}
+		\item Link 2: \texttt{<a href="vote.jsp?poll\_id=4568\&candidate=green">Vote for Mrs. Green</a>}
+	\end{itemize}
+	\item \texttt{poll\_id} wird nicht richtig sanatized
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+	\item Angreifer sendet an das Opfer:
+	\begin{itemize}
+		\item \texttt{http://host/election.jsp?poll\_id=4568\%26candidate\%3Dgreen}
+	\end{itemize}
+	\item Anhand der URL werden die Links zur Wahl generiert:
+	\begin{itemize} 
+		\item Link 1: \texttt{<a href=vote.jsp?poll\_id=4568\&candidate=green\&candidate=white>Vote for Mr. White</a>}
+		\item Link 2: \texttt{<a href=vote.jsp?poll\_id=4568\&candidate=green\&candidate=green>Vote for Mrs. Green</a>}
+	\end{itemize}
+	\item Es werden immer zwei Parameter \texttt{candidate} übergeben
+	\item Nur der erste Parameter wird verwendet
+	\item Mrs. Green wird immer gewählt
 \end{itemize}
 \end{frame}
 
@@ -119,7 +143,7 @@
 	\end{itemize}
 	\item $30\%$ hatten HPP vulnerabilities
 	\begin{itemize}
-		\item bei $14\%$ änderte dies potentiell das Verhalten der Seite
+		\item davon waren $46.8\%$ exploitable
 	\end{itemize}
 	\item Auch bekannte Websites (Google, Microsoft) darunter
 	\item Aktuellere Untersuchungen nicht bekannt
