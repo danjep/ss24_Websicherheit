@@ -34,7 +34,7 @@
 
 \addtocounter{framenumber}{-1}
 
-\begin{frame}{Einführung - Was ist HPP?)}
+\begin{frame}{Einführung - Was ist HPP?}
 \begin{itemize}
 	\item Exploit wurde 2009 öffentlich gemacht
 	\item Nutzt HTTP Parameter als Injection-Schwachstelle
@@ -65,23 +65,26 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Parameter Pollution}
+\begin{itemize}
+	% \item Neben dem zu manipulierenden Parameter kann es auch einen Parameter geben der polluted wird.
+	\item Einfügen/verändern von Parametern 
+	\item Durch manipulation existierender Parameter in verschlüsselter Form 
+	\item Reservierte Zeichen in den value-strings müssen in Hexadezimalform kodiert sein 
+	\begin{itemize}
+		\item z.B.: \texttt{\%26} für \glqq \&\grqq{}, \texttt{\%3D} für \glqq =\grqq
+	\end{itemize}
+	\item So lässt sich ein \textit{name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
+	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert und es entstehen Duplikate
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Parameter Precedence}
 \begin{itemize}
 	\item Problem entsteht, wenn für einen Parameter genau ein Wert erwartet wird, aber mehrere erhalten werden
 	\item Je nach Programmiersprache und Server wird unterschiedlich vorgegangen
 	\item[] \begin{center}\includegraphics[scale=0.4]{includes/table1.jpg}\end{center}
 	\item So können falsche Parameter in die URI hinzugefügt werden, die die Richtigen überschreiben
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Parameter Pollution}
-\begin{itemize}
-	\item Neben dem zu manipulierenden Parameter kann es auch einen Parameter geben der polluted wird.
-	\item Dafür wird in diesen der manipulierte Parameter in verschlüsselter Form eingefügt 
-	\item Reservierte Zeichen in den value-strings müssen in Hexadezimalform kodiert sein 
-	\item z.B.: \texttt{\%26} für \glqq \&\grqq{}, \texttt{\%3D} für \glqq =\grqq
-	\item So lässt sich ein \textit{name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
-	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert und es entstehen Duplikate
 \end{itemize}
 \end{frame}
 
@@ -109,9 +112,9 @@
 	\item Beeinflussung einer Online-Abstimmungen
 	\item Wahl von zwei Kandidaten über Links
 	\begin{itemize}
-		\item Url: \texttt{http://host/election.jsp?poll\_id=4568}
-		\item Link 1: \texttt{<a href="vote.jsp?poll\_id=4568\&candidate=white">Vote for Mr. White</a>}
-		\item Link 2: \texttt{<a href="vote.jsp?poll\_id=4568\&candidate=green">Vote for Mrs. Green</a>}
+		\item Url: \texttt{http://host/election.jsp?\textcolor{red!70!black}{poll\_id=4568}}
+		\item Link 1: \texttt{<a href="vote.jsp?\textcolor{red!70!black}{poll\_id=4568}\&\textcolor{blue!70!black}{candidate=white}">Vote for Mr. White</a>}
+		\item Link 2: \texttt{<a href="vote.jsp?\textcolor{red!70!black}{poll\_id=4568}\&\textcolor{blue!70!black}{candidate=green}">Vote for Mrs. Green</a>}
 	\end{itemize}
 	\item \texttt{poll\_id} wird nicht richtig sanatized
 \end{itemize}
@@ -121,12 +124,12 @@
 \begin{itemize}
 	\item Angreifer sendet an das Opfer:
 	\begin{itemize}
-		\item \texttt{http://host/election.jsp?poll\_id=4568\%26candidate\%3Dgreen}
+		\item \texttt{http://host/election.jsp?\textcolor{red!70!black}{poll\_id=4568}\textcolor{green!70!black}{\%26candidate\%3Dgreen}}
 	\end{itemize}
 	\item Anhand der URL werden die Links zur Wahl generiert:
 	\begin{itemize} 
-		\item Link 1: \texttt{<a href=vote.jsp?poll\_id=4568\&candidate=green\&candidate=white>Vote for Mr. White</a>}
-		\item Link 2: \texttt{<a href=vote.jsp?poll\_id=4568\&candidate=green\&candidate=green>Vote for Mrs. Green</a>}
+		\item Link 1: \texttt{<a href="vote.jsp?\textcolor{red!70!black}{poll\_id=4568}\&\textcolor{green!70!black}{candidate=green}\&\textcolor{blue!70!black}{candidate=white}">Vote for Mr. White</a>}
+		\item Link 2: \texttt{<a href="vote.jsp?\textcolor{red!70!black}{poll\_id=4568}\&\textcolor{green!70!black}{candidate=green}\&\textcolor{blue!70!black}{candidate=green}">Vote for Mrs. Green</a>}
 	\end{itemize}
 	\item Es werden immer zwei Parameter \texttt{candidate} übergeben
 	\item Nur der erste Parameter wird verwendet
@@ -155,7 +158,7 @@
 \item Integrierter share-Button von sozialen Netzwerken
 	\begin{itemize}
 		\item z.B. auf Nachrichtenseiten
-		\item[] \centering \includegraphics[scale=0.35]{includes/sharegrafik.png}
+		\item[] \includegraphics[scale=0.35]{includes/sharegrafik.png}
 	\end{itemize}
 \item \glqq Einkaufskorb\grqq{} auf Shopping-Seiten
 	\begin{itemize}
