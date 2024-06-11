@@ -43,7 +43,6 @@
 		\item Client-side: Verbreitung manipulierter Links
 		\item Server-side: Übergabe manipulierter Parameter an das backend
 	\end{itemize}
-	\item \todo{basic facts über den exploit}
 	\item Ziele des Exploits
 	\begin{itemize}
 		\item Modifizieren der Funktion der Webanwendung
@@ -55,12 +54,11 @@
 
 \begin{frame}{HTTP Parameter}
 \begin{itemize}
-	\item Senden Informationen vom Klienten zum Server
+	\item Senden Informationen vom Clienten zum Server
 	\item Können an verschiedenen Orten versendet werden
 	\begin{itemize}
 		\item im Query-Teil der URI (GET request) \\ $\qquad \rightarrow$ \small\texttt{www.example.org\color{red!70!black}{?name=Manfred\&age=44}}
 		\item im request body (POST request)
-		\item in HTTP headern \todo{header injection}
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -68,14 +66,14 @@
 \begin{frame}{Parameter Pollution}
 \begin{itemize}
 	% \item Neben dem zu manipulierenden Parameter kann es auch einen Parameter geben der polluted wird.
-	\item Einfügen/verändern von Parametern 
-	\item Durch manipulation existierender Parameter in verschlüsselter Form 
+	\item Einfügen oder verändern von Parametern 
+	\item Durch Manipulation existierender Parameter in codierter Form 
 	\item Reservierte Zeichen in den value-strings müssen in Hexadezimalform kodiert sein 
 	\begin{itemize}
 		\item z.B.: \texttt{\%26} für \glqq \&\grqq{}, \texttt{\%3D} für \glqq =\grqq
 	\end{itemize}
 	\item So lässt sich ein \textit{name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
-	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert und es entstehen Duplikate
+	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert
 \end{itemize}
 \end{frame}
 
@@ -91,18 +89,28 @@
 \begin{frame}{Parameter Precedence Beispiel}
 \begin{itemize}
 	\item Angenommen, es wird immer der erste Parameterwert genutzt
-	\item[] \begin{center} \texttt{example.org?name=Manfred\&{}age=44}\end{center}
+	\begin{itemize}
+		\item[] \texttt{example.org?name=Manfred\&{}age=44}
+	\end{itemize}
 	\item Der erste Parameter wird \glqq polluted\grqq{}
-	\item[] \begin{center} \texttt{example.org?name=Manfred\%26age\%3D20} \end{center}
+	\begin{itemize}
+		\item[] \texttt{example.org?name=Manfred\%26age\%3D20}
+	\end{itemize}
 	\item Wenn nun das richtige Alter eingegeben wird, werden folgende Parameter verschickt:
-	\item[]\begin{center} \texttt{example.org?name=Manfred\&{}age=20\&{}age=44} \end{center}
+	\begin{itemize}
+		\item[] \texttt{example.org?name=Manfred\&{}age=20\&{}age=44}
+	\end{itemize}
 	\item \texttt{age=44} würde ignoriert werden.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Andere Formen}
 \begin{itemize}
-	\item Neue Parameter hinzufügen \todo{was ist damit möglich?}
+	\item Es können auch neue Parameter hinzugefügt werden:
+	\begin{itemize} 
+		\item Url: \texttt{poor.pl?par1=val1\textcolor{red!70!black}{\%26action\%3Dreset}}
+		\item Link: \texttt{target.pl?x=y\&w=z\&par1=val1\textcolor{red!70!black}{\&action=reset}}
+	\end{itemize}
 	\item Parameter löschen durch Einfügen eines \texttt{\#}-Symbols
 \end{itemize}
 \end{frame}
