@@ -17,8 +17,8 @@
 % metadata
 \title{HTTP Parameter Pollution (HPP)}
 \author{Julian Liborius \and Simon Wöhltjen \and Danje Petersen}
-\institute{TU Braunschweig, Germany}
-\date{\small\today}
+\institute{TU Braunschweig}
+\date{14. Juni 2024}
 
 
 
@@ -35,7 +35,7 @@
 \addtocounter{framenumber}{-1}
 
 \begin{frame}{Einführung - Was ist HPP?}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Exploit wurde 2009 öffentlich gemacht
 	\item Nutzt HTTP Parameter als Injection-Schwachstelle
 	\item Client-side und Server-side möglich
@@ -47,38 +47,39 @@
 	\begin{itemize}
 		\item Modifizieren der Funktion der Webanwendung
 		\item Umgehen von Filtern die Parameter überprüfen
-		\item Zugriff auf Parameter die eigentlich verborgen sind
+		\item Zugriff auf Parameter, die eigentlich verborgen sind
 	\end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{HTTP Parameter}
-\begin{itemize}
-	\item Senden Informationen vom Clienten zum Server
+\begin{itemize}[<+->]
+	\item Senden Informationen vom Client zum Server
 	\item Können an verschiedenen Orten versendet werden
 	\begin{itemize}
 		\item im Query-Teil der URI (GET request) \\ $\qquad \rightarrow$ \small\texttt{www.example.org\color{red!70!black}{?name=Manfred\&age=44}}
-		\item im request body (POST request)
+		\item im request body (POST request) \\ \hspace*{7cm} \includegraphics[scale=0.8]{includes/POST.jpg}
 	\end{itemize}
+	\item Werden durch \& getrennt
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Parameter Pollution}
-\begin{itemize}
+\begin{itemize}[<+->]
 	% \item Neben dem zu manipulierenden Parameter kann es auch einen Parameter geben der polluted wird.
-	\item Einfügen oder verändern von Parametern 
+	\item Einfügen oder Verändern von Parametern 
 	\item Durch Manipulation existierender Parameter in codierter Form 
 	\item Reservierte Zeichen in den value-strings müssen in Hexadezimalform kodiert sein 
 	\begin{itemize}
 		\item z.B.: \texttt{\%26} für \glqq \&\grqq{}, \texttt{\%3D} für \glqq =\grqq
 	\end{itemize}
-	\item So lässt sich ein \textit{name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
+	\item So lässt sich ein \textit{\&{}name=value} Paar als \textit{\%26name\%3Dvalue} einfügen
 	\item Die Parameter werden bei Benutzung des manipulierten Links dekodiert
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Parameter Precedence}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Problem entsteht, wenn für einen Parameter genau ein Wert erwartet wird, aber mehrere erhalten werden
 	\item Je nach Programmiersprache und Server wird unterschiedlich vorgegangen
 	\item[] \begin{center}\includegraphics[scale=0.4]{includes/table1.jpg}\end{center}
@@ -87,7 +88,7 @@
 \end{frame}
 
 \begin{frame}{Parameter Precedence Beispiel}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Angenommen, es wird immer der erste Parameterwert genutzt
 	\begin{itemize}
 		\item[] \texttt{example.org?name=Manfred\&{}age=44}
@@ -105,7 +106,7 @@
 \end{frame}
 
 \begin{frame}{Andere Formen}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Es können auch neue Parameter hinzugefügt werden:
 	\begin{itemize} 
 		\item Url: \texttt{poor.pl?par1=val1\textcolor{red!70!black}{\%26action\%3Dreset}}
@@ -116,7 +117,7 @@
 \end{frame}
 
 \begin{frame}{Beispiel-Szenario}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Beeinflussung einer Online-Abstimmungen
 	\item Wahl von zwei Kandidaten über Links
 	\begin{itemize}
@@ -128,8 +129,8 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\begin{itemize}
+\begin{frame}{Beispiel-Szenario}
+\begin{itemize}[<+->]
 	\item Angreifer sendet an das Opfer:
 	\begin{itemize}
 		\item \texttt{http://host/election.jsp?\textcolor{red!70!black}{poll\_id=4568}\textcolor{green!70!black}{\%26candidate\%3Dgreen}}
@@ -146,7 +147,7 @@
 \end{frame}
 
 \begin{frame}{Häufigkeit}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Paper von Balduzzi et al. (2011) untersucht ca. 5000 Websites
 	\begin{itemize}
 		\item PAPAS tool (PArameter Pollution Analysis System)
@@ -162,7 +163,7 @@
 \end{frame}
 
 \begin{frame}{Gefundene Beispiele}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Integrierter share-Button von sozialen Netzwerken
 	\begin{itemize}
 		\item z.B. auf Nachrichtenseiten
@@ -178,7 +179,7 @@
 \end{frame}
 
 \begin{frame}{Gegenmaßnahmen}
-\begin{itemize}
+\begin{itemize}[<+->]
 	\item Input sanitation
 	\item Nur bekannte Parameter akzeptieren
 	\item Berücksichtigung von doppelten Parametern
