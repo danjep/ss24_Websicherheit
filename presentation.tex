@@ -46,7 +46,7 @@
 	\item Ziele des Exploits
 	\begin{itemize}
 		\item Modifizieren der Funktion der Webanwendung
-		\item Umgehen von Filtern die Parameter überprüfen
+		\item Umgehen von Filtern, die Parameter überprüfen
 		\item Zugriff auf Parameter, die eigentlich verborgen sind
 	\end{itemize}
 \end{itemize}
@@ -152,10 +152,12 @@
 	\begin{itemize}
 		\item PAPAS tool (PArameter Pollution Analysis System)
 		\item Sucht nach Client-side vulnerabilities
+		\item Test auf Parameter Precedence und Injection von Parametern per URL-Encoding
 	\end{itemize}
 	\item $30\%$ hatten HPP vulnerabilities
 	\begin{itemize}
-		\item davon waren $46.8\%$ exploitable
+		\item davon waren min. $46.8\%$ exploitable
+		\item Unabhängig von Kategorie der Website
 	\end{itemize}
 	\item Auch bekannte Websites (Google, Microsoft) darunter
 	\item Aktuellere Untersuchungen nicht bekannt
@@ -182,6 +184,7 @@
 \begin{itemize}%[<+->]
 	\item Input sanitation
 	\item Nur bekannte Parameter akzeptieren
+	\item Parameter nur dort akzeptieren, wo sie erwartet werden
 	\item Berücksichtigung von doppelten Parametern
 \end{itemize}
 \end{frame}
